@@ -9,6 +9,9 @@ export const ProductSchema = z.object({
     categoryId: z.number()
 })
 
+export type ProductType = z.infer<typeof ProductSchema>;
+
+
 export const CategorySchema = z.object({
     id: z.number(),
     name: z.string()
@@ -17,3 +20,5 @@ export const CategorySchema = z.object({
 export const CategoryWithProductsResponseSchema = CategorySchema.extend({
     product: z.array(ProductSchema)
 });
+
+export const Categorys = z.array(CategorySchema)
