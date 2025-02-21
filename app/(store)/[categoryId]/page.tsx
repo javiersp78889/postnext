@@ -1,4 +1,4 @@
-import { CategoryWithProductsResponseSchema } from "@/app/src/schemas"
+import { CategoryWithProductsResponseSchema } from "@/src/schemas"
 import ProductCard from "@/Components/Products/ProductCard"
 import { redirect } from "next/navigation"
 

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, z } from "zod";
 
 export const ProductSchema = z.object({
     id: z.number(),
@@ -22,3 +22,18 @@ export const CategoryWithProductsResponseSchema = CategorySchema.extend({
 });
 
 export const Categorys = z.array(CategorySchema)
+
+
+const CarritoShcema = ProductSchema.pick({
+    name: true,
+    image: true,
+    price: true,
+    inventory: true,
+}).extend({
+    productId: number(),
+    quantity: z.number()
+})
+
+export const shoppingCart = z.array(CarritoShcema)
+
+export type ShoppingCartType = z.infer<typeof shoppingCart>

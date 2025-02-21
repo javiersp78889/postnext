@@ -1,3 +1,4 @@
+import ShoppingCart from "@/Components/cart/ShoppingCart";
 import MainNav from "@/Components/ui/MainNav";
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
                     {children}
                 </div>
                 <aside className="md:w-96 md:h-screen md:overflow-y-scroll pt-10 pb-32 px-5 ">
-
+                    <ShoppingCart />
                 </aside>
             </main>
         </>

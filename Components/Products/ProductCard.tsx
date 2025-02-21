@@ -1,6 +1,7 @@
-import { formater } from "@/app/src/formater/utils"
-import { ProductType } from "@/app/src/schemas"
+import { formater } from "@/src/formater/utils"
+import { ProductType } from "@/src/schemas"
 import Image from "next/image"
+import AddProduct from "./AddProduct"
 
 
 
@@ -19,14 +20,7 @@ export default function ProductCard({ producto }: { producto: ProductType }) {
                     <p className="text-2xl font-extrabold  text-gray-900">{formater(producto.price)}</p>
                 </div>
             </div>
-            <button
-                type="button"
-                className="absolute top-5 -right-3"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 bg-indigo-600 rounded-full text-white">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </button>
+            <AddProduct producto={producto} />
         </div>
     )
 }

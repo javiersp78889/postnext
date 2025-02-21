@@ -1,4 +1,4 @@
-import { Categorys, CategorySchema } from "@/app/src/schemas";
+import { Categorys, CategorySchema } from "@/src/schemas";
 import Logo from "./Logo";
 import Link from "next/link";
 
