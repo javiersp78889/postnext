@@ -8,7 +8,10 @@ interface Store {
 
     total: number,
     productoscart: ShoppingCartType,
-    addTocar: (producto: ProductType) => void
+    addTocar: (producto: ProductType) => void,
+    updateQuantity: (id: ProductType['id'], quantity: number) => void,
+    delete: (id: ProductType['id']) => void,
+    calculateTotal: () => void
 
 }
 
@@ -19,7 +22,6 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         let productoscart: ShoppingCartType = []
         const { id: productId, categoryId, ...data } = producto
         const duplicated = get().productoscart.findIndex(item => item.productId === productId)
-
 
         if (duplicated >= 0) {
             productoscart = get().productoscart.map(n => n.productId === productId ? {
@@ -32,8 +34,33 @@ export const useStore = create<Store>()(devtools((set, get) => ({
 
         set(() => ({
             productoscart
+
+        }))
+        get().calculateTotal()
+    },
+    updateQuantity: (id, cantidad) => {
+        const productoscart = get().productoscart.map(item => item.productId === id ? { ...item, quantity: cantidad } : item)
+
+        set(() => ({
+            productoscart,
+
         }))
 
-        console.log(productoscart)
+        get().calculateTotal()
+    },
+    delete: (id) => {
+        const productoscart = get().productoscart.filter(item => item.productId !== id)
+        set(() => ({
+            productoscart
+
+        }))
+        get().calculateTotal()
+    },
+    calculateTotal: () => {
+        let total = get().productoscart.reduce((total, item) => total + (item.price * item.quantity), 0)
+        console.log(get().productoscart)
+        set(() => ({
+            total
+        }))
     }
 })))

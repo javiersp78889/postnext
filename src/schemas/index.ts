@@ -36,4 +36,6 @@ const CarritoShcema = ProductSchema.pick({
 
 export const shoppingCart = z.array(CarritoShcema)
 
+export type Cartito = z.infer<typeof CarritoShcema>
+
 export type ShoppingCartType = z.infer<typeof shoppingCart>

@@ -12,7 +12,7 @@ export default function ProductCard({ producto }: { producto: ProductType }) {
         >
             <div>
 
-                <Image src={`${process.env.API_URL}/${producto.image}`} alt={`imagen de producto ${producto.name}`} width={400} height={200}></Image>
+                <Image src={`${process.env.API_URL}/${producto.image}`} alt={`imagen de producto ${producto.name}`} width={400} height={200} priority></Image>
 
                 <div className="p-3 space-y-2">
                     <h3 className="text-xl font-bold text-gray-600">{producto.name}</h3>
