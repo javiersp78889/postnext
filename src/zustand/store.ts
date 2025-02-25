@@ -11,7 +11,8 @@ interface Store {
     addTocar: (producto: ProductType) => void,
     updateQuantity: (id: ProductType['id'], quantity: number) => void,
     delete: (id: ProductType['id']) => void,
-    calculateTotal: () => void
+    calculateTotal: () => void,
+    applyCoupon: (coupon: string) => Promise<void>
 
 }
 
@@ -62,5 +63,20 @@ export const useStore = create<Store>()(devtools((set, get) => ({
         set(() => ({
             total
         }))
+    },
+    applyCoupon: async (coupon) => {
+        const data = {
+            "coupon_name": coupon
+        }
+        const req = await fetch('/coupon/api', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+
+
+        const json = await req.json()
+
+        return Response.json({ json })
+
     }
 })))

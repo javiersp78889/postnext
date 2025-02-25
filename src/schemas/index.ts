@@ -39,3 +39,9 @@ export const shoppingCart = z.array(CarritoShcema)
 export type Cartito = z.infer<typeof CarritoShcema>
 
 export type ShoppingCartType = z.infer<typeof shoppingCart>
+
+
+export const CouponSchema = z.object({
+
+    coupon_name: z.string().min(6, { message: "El cupon no es válido" })
+})

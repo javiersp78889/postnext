@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import ShoppingCartItem from './ShoppingCartItem'
 import { formater } from '@/src/formater/utils'
+import CouponForm from './CouponForm'
 
 
 export default function ShoppingCart() {
@@ -20,12 +21,13 @@ export default function ShoppingCart() {
             {contents.map(item => (
                 <ShoppingCartItem key={item.productId} item={item} />
             ))}
-            <div className='m-0  '>
+            <CouponForm/>
+            <div className='py-5  '>
 
                 <h2 className='font-bold text-4xl text-gray-900 '>Total: {formater(total)}</h2>
 
             </div>
-
+            
         </>
     )
 }
