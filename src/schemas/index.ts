@@ -45,3 +45,44 @@ export const CouponSchema = z.object({
 
     coupon_name: z.string().min(6, { message: "El cupon no es válido" })
 })
+
+
+export const couponResponseSchema = z.object({
+
+    expirationDate: z.string(),
+
+    name: z.string(),
+
+    percentage: z.coerce.number().default(0),
+})
+
+
+export const responseSchema = z.object({
+    message: z.string().min(1, { message: 'mensaje no esperado' }),
+    status: z.number(),
+    cupon: couponResponseSchema.optional()
+})
+
+
+export type Tresponse = z.infer<typeof responseSchema>
+
+
+const OrderContentSchema = z.object({
+    productId: z.number(),
+    quantity: z.number(),
+    price: z.number()
+})
+export const OrderSchema = z.object({
+    total: z.number(),
+    coupon: z.string(),
+    contents: z.array(OrderContentSchema).min(1, { message: 'El Carrito no puede ir vacio' })
+})
+
+
+export const SuccessResponeSchema = z.object({
+    message: z.string().min(1, { message: 'Error' })
+})
+
+
+
+export type TCompras = z.infer<typeof OrderSchema>

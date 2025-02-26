@@ -8,7 +8,7 @@ type Params = Promise<{ categoryId: string }>
 const getProducts = async (categoryId: string) => {
     const url = `${process.env.API_URL}/categories/${categoryId}?products=true`
 
-    const req = await fetch(url)
+    const req = await fetch(url,{next:{tags:['productos']}})
     const json = await req.json()
 
     if(!req.ok){

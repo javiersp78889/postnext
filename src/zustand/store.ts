@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ProductType, ShoppingCartType } from "../schemas";
+import { ProductType, responseSchema, ShoppingCartType, Tresponse } from "../schemas";
 import { devtools } from "zustand/middleware";
 
 
@@ -7,18 +7,42 @@ import { devtools } from "zustand/middleware";
 interface Store {
 
     total: number,
+    porcentaje: number,
     productoscart: ShoppingCartType,
     addTocar: (producto: ProductType) => void,
     updateQuantity: (id: ProductType['id'], quantity: number) => void,
     delete: (id: ProductType['id']) => void,
     calculateTotal: () => void,
-    applyCoupon: (coupon: string) => Promise<void>
+    applyCoupon: (coupon: string) => Promise<void>,
+    response: Tresponse,
+    descuento: number,
+    coupon: string,
+    DeleteDiscount: () => void,
+    buyProducts: () => void
 
 }
+
+const initializar = {
+    descuento: 0,
+    response: {
+        message: '',
+        status: 0,
+        cupon: {
+            name: '',
+            expirationDate: '',
+            percentage: 0
+        }
+    },
+    porcentaje: 0
+}
+
+const shoppingCartInit:ShoppingCartType = []
+
 
 export const useStore = create<Store>()(devtools((set, get) => ({
     total: 0,
     productoscart: [],
+    response: [],
     addTocar: (producto) => {
         let productoscart: ShoppingCartType = []
         const { id: productId, categoryId, ...data } = producto
@@ -52,14 +76,31 @@ export const useStore = create<Store>()(devtools((set, get) => ({
     delete: (id) => {
         const productoscart = get().productoscart.filter(item => item.productId !== id)
         set(() => ({
-            productoscart
-
+            productoscart,
         }))
-        get().calculateTotal()
+
+
+        if (productoscart.length <= 0) {
+            set(() => (initializar))
+        }
+
+        get().DeleteDiscount()
+
+
+    },
+    DeleteDiscount: () => {
+        let total = get().productoscart.reduce((total, item) => total + (item.price * item.quantity), 0)
+        const descuento = (total * get().porcentaje)
+        total = total - descuento
+        set(() => ({
+            total,
+            descuento
+        }))
+
     },
     calculateTotal: () => {
         let total = get().productoscart.reduce((total, item) => total + (item.price * item.quantity), 0)
-        console.log(get().productoscart)
+
         set(() => ({
             total
         }))
@@ -75,8 +116,36 @@ export const useStore = create<Store>()(devtools((set, get) => ({
 
 
         const json = await req.json()
+        console.log(json)
+        const response = responseSchema.parse(json)
 
-        return Response.json({ json })
 
-    }
+        if (response.cupon) {
+            const { percentage } = response.cupon
+            const coupon = response.cupon.name
+            const porcentaje = percentage / 100
+            const descuento = (get().total * porcentaje)
+            const total = get().total - descuento
+            set(() => ({
+                response,
+                total,
+                descuento,
+                coupon,
+                porcentaje
+            }))
+        }
+
+
+        set(() => ({
+            response,
+        }))
+    },
+    buyProducts: () => {
+
+
+        set(() => ({
+            productoscart:shoppingCartInit
+        }))
+
+    },
 })))

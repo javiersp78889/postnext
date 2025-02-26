@@ -1,16 +1,16 @@
 import { useStore } from "@/src/zustand/store"
+import { useState } from "react"
 
 export default function CouponForm() {
 
-    const coupon = useStore(state => state.applyCoupon)
+
+    const { applyCoupon: coupon, response } = useStore(state => state)
     const validar = async (formData: FormData) => {
 
 
 
         const datos = formData.get('coupon_name')?.toString()!
-        const response = await coupon(datos)
-
-
+        await coupon(datos)
 
     }
 
@@ -34,6 +34,14 @@ export default function CouponForm() {
                     value='Canjear'
                 />
             </form>
+            {response.status === 200 ? (
+                <>
+
+                    <p className="font-black text-lg text-green-500">{response.message} <span className="text-black">{response.cupon?.percentage}%</span></p>
+                </>
+            )
+                :
+                <p className="font-black text-lg text-red-500">{response.message}</p>}
         </>
     )
 }
