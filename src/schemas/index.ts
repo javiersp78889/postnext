@@ -74,7 +74,7 @@ const OrderContentSchema = z.object({
 })
 export const OrderSchema = z.object({
     total: z.number(),
-    coupon: z.string(),
+    coupon: z.string().optional(),
     contents: z.array(OrderContentSchema).min(1, { message: 'El Carrito no puede ir vacio' })
 })
 

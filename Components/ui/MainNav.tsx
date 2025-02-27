@@ -34,6 +34,8 @@ export default async function MainNav() {
 
                 ))}
 
+                <Link href={'/admin/sales'} className="rounded bg-green-500 hover:bg-green-700 p-3 font-bold text-white">Panel de Administración</Link>
+
             </nav>
         </header>
     )
