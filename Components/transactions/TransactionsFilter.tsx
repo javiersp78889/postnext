@@ -24,7 +24,7 @@ export default function TransactionsFilter() {
         queryFn: () => getVentas(formatDate)
     })
 
-    const total = data?.reduce((total, items) => +items.total + total,0)
+    const total = data?.reduce((total, items) => +items.total + total, 0)
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 mt-10'>
@@ -36,7 +36,8 @@ export default function TransactionsFilter() {
             <div className='flex flex-col items-center'>
                 {isLoading ? <p>Cargando...</p> : (
                     <>
-                        <h1 className='font-bold uppercase text-xl'>total del día: {formater(+total!)}</h1>
+                        <h1 className='font-bold uppercase text-xl'>{total ? `total del día: ${formater(+total)}` : ''}</h1>
+
                         {data?.length ? (
 
                             data?.map(n => (
