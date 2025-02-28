@@ -86,3 +86,25 @@ export const SuccessResponeSchema = z.object({
 
 
 export type TCompras = z.infer<typeof OrderSchema>
+
+
+
+export const ContentsSchema = z.object({
+    id: z.number(),
+    quantity: z.number(),
+    price: z.coerce.number(),  // <-- Se asegura de que siempre sea número
+    product: ProductSchema
+});
+
+export const TransactionResponseSchema = z.object({
+    id: z.number(),
+    total: z.string(),
+    transactionDate: z.string(),
+    discount: z.string().nullable().optional(),  // <-- Ahora acepta null
+    coupon: z.string().nullable().optional(),    // <-- También acepta null
+    contents: z.array(ContentsSchema).default([]) // <-- Evita errores si falta
+});
+
+export const TransactionsResponseSchema = z.array(TransactionResponseSchema);
+
+export type TTransactionsResponse = z.infer<typeof TransactionResponseSchema>

@@ -15,6 +15,6 @@ export async function GET(request: NextRequest) {
 
 
 
-    return NextResponse.json({ json });
+    return NextResponse.json(json);
 
 }

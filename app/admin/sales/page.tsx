@@ -4,19 +4,15 @@ import Headings from '@/Components/ui/Headings'
 import React from 'react'
 import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { format } from 'date-fns'
+import { getVentas } from '@/src/api'
 
 
 
-export async function getVentas() {
 
-  const url=`localhost:3001/admin/sales/api?transactionDate=${date}`
-}
+export default async function Salespage() {
 
 
-export default async function Salespage({params}) {
 
-
-  console.log(await params)
   const queryClient = new QueryClient()
 
 
@@ -25,11 +21,13 @@ export default async function Salespage({params}) {
   const formatedDate = format(today, 'yyyy-MM-dd')
   await queryClient.prefetchQuery({
     queryKey: ['sales', formatedDate],
-    queryFn: getVentas
+    queryFn: () => getVentas(formatedDate)
   })
 
 
   
+
+
   return (
     <>
       <Headings>Ventas</Headings>

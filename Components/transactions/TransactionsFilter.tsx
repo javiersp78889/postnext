@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { format } from 'date-fns'
+import { useQuery } from '@tanstack/react-query'
+import { getVentas } from '@/src/api'
+import { da } from 'date-fns/locale'
+import TransactionSummary from './TransactionSummary'
 
 type ValuePiece = Date | null
 
@@ -13,7 +17,14 @@ export default function TransactionsFilter() {
 
     const [date, setDate] = useState<Value>(new Date)
     const formatDate = format(date?.toString()!, 'yyyy-MM-dd')
-    console.log(formatDate)
+
+    const { data, isLoading } = useQuery({
+        queryKey: ['sales', formatDate],
+        queryFn: () => getVentas(formatDate)
+    })
+
+
+
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 mt-10'>
 
@@ -21,8 +32,25 @@ export default function TransactionsFilter() {
                 <Calendar value={date} onChange={setDate} />
             </div>
 
-            <div>
-                2
+            <div className='flex flex-col items-center'>
+                {isLoading ? <p>Cargando...</p> : (
+                    <>
+
+                        {data?.length ? (
+
+                            data?.map(n => (
+
+                                <TransactionSummary key={n.id} n={n} />
+
+                            ))
+
+                        ) : <p className='text-center text-lg'>No hay registros</p>}
+
+
+
+                    </>
+                )
+                }
 
             </div>
         </div>
