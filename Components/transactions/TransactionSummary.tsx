@@ -1,3 +1,4 @@
+import { formater } from "@/src/formater/utils"
 import { TTransactionsResponse } from "@/src/schemas"
 import Image from "next/image"
 
@@ -7,32 +8,37 @@ type TResponse = {
 }
 
 
-export default function TransactionSummary({n}: TResponse) {
+export default function TransactionSummary({ n }: TResponse) {
 
     const transaction = {
         contents: [n.contents]
     }
 
+   
+
+
+
     return (
         <>
             <div className='mt-6  text-sm font-medium text-gray-500 border border-gray-200'>
+
+                
                 <p className='text-sm font-black text-gray-900 p-2 bg-gray-200 '>ID: {n.id}</p>
                 <ul
                     role="list"
                     className="divide-y divide-gray-200 border-t border-gray-200 border-b"
                 >
 
-                    
+
                     {n.contents.map((item) => (
-                    
+
                         <li key={item.id} className="p-5 ">
                             <div className='flex items-center space-x-6 '>
                                 <div className='relative w-32 h-32'>
-                                <Image src={`${process.env.NEXT_PUBLIC_API_URL}/${item.product.image}`} width={200} height={100} alt={`imagen`}></Image>
+                                    <Image src={`${process.env.NEXT_PUBLIC_API_URL}/${item.product.image}`} width={200} height={100} alt={`imagen`}></Image>
                                 </div>
                                 <div className="flex-auto space-y-1 ">
-                                    <h3 className="text-gray-900">
-                                    </h3>
+                                    <h3 className="text-gray-900">{item.product.name}</h3>
                                     <p className="text-lg font-extrabold  text-gray-900"></p>
                                     <p className="text-lg  text-gray-900">Cantidad:{item.quantity} </p>
                                 </div>
@@ -45,17 +51,17 @@ export default function TransactionSummary({n}: TResponse) {
 
                     <div className="flex justify-between">
                         <dt>Cupón Utilizado:</dt>
-                        <dd className="text-gray-900">{n.coupon? n.coupon: 'No se uso'}</dd>
+                        <dd className="text-gray-900">{n.coupon ? n.coupon : 'No se usó'}</dd>
                     </div>
 
                     <div className="flex justify-between">
                         <dt>Descuento</dt>
-                        <dd className="text-gray-900">-{n.discount?n.discount:'No se uso'}</dd>
+                        <dd className="text-gray-900">{n.discount ? (`-${formater(+n.discount)}`) : 'No se uso'}</dd>
                     </div>
 
                     <div className="flex justify-between">
                         <dt className="text-lg text-black font-black">Total</dt>
-                        <dd className="text-lg text-black font-black">{n.total}</dd>
+                        <dd className="text-lg text-black font-black">{formater(+n.total)}</dd>
                     </div>
                 </dl>
             </div>
