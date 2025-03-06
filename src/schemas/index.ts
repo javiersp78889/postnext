@@ -9,6 +9,13 @@ export const ProductSchema = z.object({
     categoryId: z.number()
 })
 
+
+
+export const ListProductSchema = z.object({
+    products: z.array(ProductSchema),
+    total: z.coerce.number()
+})
+export type LProductType = z.infer<typeof ListProductSchema>;
 export type ProductType = z.infer<typeof ProductSchema>;
 
 

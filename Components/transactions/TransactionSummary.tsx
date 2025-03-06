@@ -14,7 +14,7 @@ export default function TransactionSummary({ n }: TResponse) {
         contents: [n.contents]
     }
 
-   
+
 
 
 
@@ -22,7 +22,7 @@ export default function TransactionSummary({ n }: TResponse) {
         <>
             <div className='mt-6  text-sm font-medium text-gray-500 border border-gray-200'>
 
-                
+
                 <p className='text-sm font-black text-gray-900 p-2 bg-gray-200 '>ID: {n.id}</p>
                 <ul
                     role="list"
@@ -48,16 +48,23 @@ export default function TransactionSummary({ n }: TResponse) {
                 </ul>
 
                 <dl className="space-y-6  text-sm font-medium text-gray-500 p-5">
+                    {n.coupon ? (
+                        <>
+                            <div className="flex justify-between">
+                                <dt>Cupón Utilizado:</dt>
+                                <dd className="text-gray-900">{n.coupon}</dd>
+                            </div>
 
-                    <div className="flex justify-between">
-                        <dt>Cupón Utilizado:</dt>
-                        <dd className="text-gray-900">{n.coupon ? n.coupon : 'No se usó'}</dd>
-                    </div>
+                            <div className="flex justify-between">
+                                <dt>Descuento</dt>
+                                <dd className="text-gray-900">-{formater(+n.discount!)}</dd>
+                            </div>
 
-                    <div className="flex justify-between">
-                        <dt>Descuento</dt>
-                        <dd className="text-gray-900">{n.discount ? (`-${formater(+n.discount)}`) : 'No se uso'}</dd>
-                    </div>
+                        </>
+
+
+                    ) : ('')}
+
 
                     <div className="flex justify-between">
                         <dt className="text-lg text-black font-black">Total</dt>

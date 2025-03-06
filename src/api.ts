@@ -4,7 +4,6 @@ export async function getVentas(date: string) {
     
     const url = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/admin/sales/api?transactionDate=${date}`
     
-    
     const req = await fetch(url)
 
 
