@@ -23,7 +23,7 @@ async function getProducts(productsPerPage: number, skip: number) {
 type SearchParams = Promise<{ page: string }>
 export default async function Productspage({ searchParams }: { searchParams: SearchParams }) {
   const { page } = await searchParams
-  if (+page <= 0) {
+  if (+page <= 0 || !page) {
     redirect('/admin/products?page=1')
   }
   const productsPerPage = 10
@@ -34,21 +34,22 @@ export default async function Productspage({ searchParams }: { searchParams: Sea
   const tot = Math.ceil(total / productsPerPage)
   const paginas = Array.from({ length: tot }, (_, index) => index + 1);
 
-  if (!param || +page > tot ) {
+  if (!param || +page > tot) {
     redirect('/admin/products?page=1')
   }
 
   return (
     <>
+      <Link href={`/admin/products/new`} className='rounded bg-green-400 font-bold py-2 px-10'>Nuevo Producto</Link>
       <Headings>Administar Productos</Headings>
 
 
       <ProductsTable products={products} total={0} />
 
       <nav className="flex items-center justify-center gap-3 pt-5 ">
-      {+page=== 1?(''):
-        <Link href={`/admin/products?page=${+page - 1}`} className='font-bold hover:text-red-500'>Anterior</Link>
-      }
+        {+page === 1 ? ('') :
+          <Link href={`/admin/products?page=${+page - 1}`} className='font-bold hover:text-red-500'>Anterior</Link>
+        }
         {paginas.map(n => (
 
 
@@ -57,10 +58,10 @@ export default async function Productspage({ searchParams }: { searchParams: Sea
 
         ))}
 
-          {+page=== tot?(''):
-          
-         <Link href={`/admin/products?page=${+page + 1}`} className='font-bold hover:text-green-500'>Siguiente</Link>
-          }
+        {+page === tot ? ('') :
+
+          <Link href={`/admin/products?page=${+page + 1}`} className='font-bold hover:text-green-500'>Siguiente</Link>
+        }
       </nav>
 
     </>
