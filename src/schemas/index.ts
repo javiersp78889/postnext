@@ -30,6 +30,8 @@ export const CategoryWithProductsResponseSchema = CategorySchema.extend({
 
 export const Categorys = z.array(CategorySchema)
 
+export type Categorys= z.infer<typeof Categorys>
+
 
 const CarritoShcema = ProductSchema.pick({
     name: true,
