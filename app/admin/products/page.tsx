@@ -40,7 +40,7 @@ export default async function Productspage({ searchParams }: { searchParams: Sea
 
   return (
     <>
-      <Link href={`/admin/products/new`} className='rounded bg-green-400 font-bold py-2 px-10'>Nuevo Producto</Link>
+      <Link href={`/admin/products/new?opcion=create`} className='rounded bg-green-400 font-bold py-2 px-10'>Nuevo Producto</Link>
       <Headings>Administar Productos</Headings>
 
 
