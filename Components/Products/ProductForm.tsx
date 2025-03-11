@@ -1,4 +1,5 @@
-import { Categorys } from "@/src/schemas";
+import { Categorys, ProductTypeSchema } from "@/src/schemas";
+import { da } from "date-fns/locale";
 const getCategory = async () => {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/categories`
 
@@ -11,7 +12,7 @@ const getCategory = async () => {
   return response
 }
 
-export default async function ProductForm() {
+export default async function ProductForm({ data }: { data?: ProductTypeSchema }) {
   const categorias = await getCategory()
   return (
     <>
@@ -26,6 +27,7 @@ export default async function ProductForm() {
           placeholder="Nombre Producto"
           className="border border-gray-300 w-full p-2"
           name="name"
+          defaultValue={data ? (data.name) : ''}
         />
       </div>
 
@@ -41,6 +43,7 @@ export default async function ProductForm() {
           className="border border-gray-300 w-full p-2"
           name="price"
           min={0}
+          defaultValue={data ? (data.price) : ''}
         />
       </div>
 
@@ -56,6 +59,7 @@ export default async function ProductForm() {
           className="border border-gray-300 w-full p-2"
           name="inventory"
           min={0}
+          defaultValue={data ? (data.inventory) : ''}
         />
       </div>
 
@@ -68,8 +72,14 @@ export default async function ProductForm() {
           id="categoryId"
           className="border border-gray-300 w-full p-2 bg-white"
           name="categoryId"
+          defaultValue={data ? (data.categoryId) : ''}
         >
-          <option value="">Seleccionar Categoría</option>
+          {data?(
+            <option value={data.category.id}>{data.category.name}</option>
+          ):(
+            <option value="">Seleccionar Categoría</option>
+          )}
+          
           {categorias.map(item => (
             <option key={item.id} value={item.id}>{item.name}</option>
           ))}
