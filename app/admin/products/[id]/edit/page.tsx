@@ -27,7 +27,7 @@ export default async function page({ params }: { params: Params }) {
     return (
         <>
             <Link href={`/admin/products?page=1`} className='rounded bg-green-400 font-bold py-2 px-10'>Volver</Link>
-            <Headings>Editar Producto</Headings>
+            <Headings>Editar Producto: <span className='font-bold '>{product.name}</span></Headings>
 
 
             <EditProductForm>

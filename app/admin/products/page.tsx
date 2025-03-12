@@ -10,7 +10,9 @@ async function getProducts(productsPerPage: number, skip: number) {
 
   const url = `${process.env.NEXT_PUBLIC_API_URL}/products?take=${productsPerPage}&&skip=${skip}`
 
-  const req = await fetch(url)
+  const req = await fetch(url, {
+    next: { tags: ['product'] }
+  })
 
   const json = await req.json()
 
