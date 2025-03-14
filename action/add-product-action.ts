@@ -1,7 +1,7 @@
 "use server"
 
 import { ErrorResponseSchema, ProductFormSchema, SuccessResponeSchema } from "@/src/schemas"
-import { da } from "date-fns/locale"
+
 
 type Tproduct = {
     success: string,
@@ -15,7 +15,8 @@ export const addProduct = async (prevstate: Tproduct, formData: FormData) => {
         name: formData.get('name'),
         price: formData.get('price'),
         inventory: formData.get('inventory'),
-        categoryId: formData.get('categoryId')
+        categoryId: formData.get('categoryId'),
+        image: formData.get('image') ? formData.get('image') : null
     }
 
     const data = ProductFormSchema.safeParse(info)
@@ -41,15 +42,15 @@ export const addProduct = async (prevstate: Tproduct, formData: FormData) => {
         const errors = ErrorResponseSchema.parse(json)
 
         return {
-            errors: [errors.error], 
+            errors: [errors.error],
             success: ''
         }
     }
 
- 
+
 
     return {
         errors: [],
-        success:"Producto creado"
+        success: "Producto creado"
     }
 }

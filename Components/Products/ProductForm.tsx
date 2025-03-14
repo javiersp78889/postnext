@@ -1,5 +1,6 @@
 import { Categorys, ProductTypeSchema } from "@/src/schemas";
 import { da } from "date-fns/locale";
+import UploadProductImage from "./UploadProductImage";
 const getCategory = async () => {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/categories`
 
@@ -74,18 +75,20 @@ export default async function ProductForm({ data }: { data?: ProductTypeSchema }
           name="categoryId"
           defaultValue={data ? (data.categoryId) : ''}
         >
-          {data?(
+          {data ? (
             <option value={data.category.id}>{data.category.name}</option>
-          ):(
+          ) : (
             <option value="">Seleccionar Categoría</option>
           )}
-          
+
           {categorias.map(item => (
             <option key={item.id} value={item.id}>{item.name}</option>
           ))}
 
         </select>
       </div>
+
+      <UploadProductImage />
 
     </>
   )
