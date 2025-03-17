@@ -1,4 +1,4 @@
-import { formater } from "@/src/formater/utils"
+import { formater, getImagePath } from "@/src/formater/utils"
 import { TTransactionsResponse } from "@/src/schemas"
 import Image from "next/image"
 
@@ -35,7 +35,7 @@ export default function TransactionSummary({ n }: TResponse) {
                         <li key={item.id} className="p-5 ">
                             <div className='flex items-center space-x-6 '>
                                 <div className='relative w-32 h-32'>
-                                    <Image src={`${process.env.NEXT_PUBLIC_API_URL}/${item.product.image}`} width={200} height={100} alt={`imagen`}></Image>
+                                    <Image src={getImagePath(item.product.image)} width={200} height={100} alt={`imagen`}></Image>
                                 </div>
                                 <div className="flex-auto space-y-1 ">
                                     <h3 className="text-gray-900">{item.product.name}</h3>

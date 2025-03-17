@@ -1,6 +1,6 @@
 "use client"
 import { DeleteProduct } from "@/action/delete-product-action"
-import { formater } from "@/src/formater/utils"
+import { formater, getImagePath, isAviable } from "@/src/formater/utils"
 import { LProductType, ProductType } from "@/src/schemas"
 import Image from "next/image"
 import Link from "next/link"
@@ -57,7 +57,7 @@ export default function ProductsTable(products: LProductType) {
                                 {products.products.map(product => (
                                     <tr key={product.id}>
                                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            <Image src={`${process.env.NEXT_PUBLIC_API_URL}/${product.image}`} width={200} height={400} alt="imagen"></Image>
+                                            <Image src={getImagePath(product.image)} width={200} height={400} alt="imagen"></Image>
                                         </td>
                                         <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                             <p>{product.name}</p>
@@ -66,7 +66,7 @@ export default function ProductsTable(products: LProductType) {
                                             <p>{formater(product.price)}</p>
                                         </td>
                                         <td className="px-3 py-4 text-sm text-gray-500">
-                                            <p>{product.inventory}</p>
+                                            <p>{isAviable(product.inventory)}</p>
                                         </td>
                                         <td className="relative py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 ">
                                             <div className='flex gap-5 justify-end items-center'>

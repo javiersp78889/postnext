@@ -10,14 +10,16 @@ type Tproduct = {
 
 export const addProduct = async (prevstate: Tproduct, formData: FormData) => {
     const url = `${process.env.API_URL}/products`
-
+    console.log('aqui')
+    console.log(formData)
     const info = {
         name: formData.get('name'),
         price: formData.get('price'),
         inventory: formData.get('inventory'),
         categoryId: formData.get('categoryId'),
-        image: formData.get('image') ? formData.get('image') : null
+        image: formData.get('image')
     }
+   
 
     const data = ProductFormSchema.safeParse(info)
 

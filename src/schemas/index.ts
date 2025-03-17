@@ -126,7 +126,7 @@ export const ProductFormSchema = z.object({
     inventory: z.coerce.number({ message: 'Inventario no válido' })
         .min(1, { message: 'El inventario debe ser mayor a 0' }),
     categoryId: z.coerce.number({ message: 'La Categoria no es válida' }),
-    image: z.string().optional()
+    image: z.string({message:'La imagen es obligatoria'})
 })
 
 export const ErrorResponseSchema = z.object({

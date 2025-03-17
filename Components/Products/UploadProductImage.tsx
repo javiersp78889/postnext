@@ -5,7 +5,7 @@ import Image from "next/image"
 import { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
 
-export default function UploadProductImage() {
+export default function UploadProductImage({ currentImage }: { currentImage: string }) {
     const [url, setUrl] = useState('')
     const onDrop = useCallback(async (file: File[]) => {
         const formData = new FormData()
@@ -45,10 +45,18 @@ export default function UploadProductImage() {
                         <p>Imagen de Producto</p>
                         <Image src={url} width={60} height={60} alt="imagen nueva" />
                     </div>
-                    : ''}
+                    : <div className="py-5 space-y-3 flex items-center justify-center flex-col">
+                        {currentImage ?
+                            <>
+                                <p>Imagen de Producto</p>
+                                <Image src={currentImage} width={60} height={60} alt="imagen nueva" />
+                            </>
+                            : ''}
+
+                    </div>}
             </div>
 
-            <input type="hidden" name="image" defaultValue={url} />
+            <input type="hidden" name="image" defaultValue={url?url:currentImage} />
         </>
 
     )

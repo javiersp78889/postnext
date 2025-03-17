@@ -15,7 +15,8 @@ export const editProduct = async (id: number, prevState: Tproduct, formData: For
         name: formData.get('name'),
         price: formData.get('price'),
         inventory: formData.get('inventory'),
-        categoryId: formData.get('categoryId')
+        categoryId: formData.get('categoryId'),
+        image: formData.get('image')
     }
 
     const validation = ProductFormSchema.safeParse(data)
